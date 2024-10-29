@@ -42,6 +42,267 @@ VLAN Types
     Management - Switch and router management
     Native - Untagged switch and router traffic
 
+Describe Classful IPv4 addressing and subnetting
+    Class A (0 to 127)
+    Class B (128 to 191)
+    Class C (192 to 223)
+    Class D (224 to 239) - Multicasting
+    Class E (240 to 255) - Not used
+
+Offset = (MTU - (IHL x 4)) ÷ 8
+	MTU by default is 1500
+	IHL x 4 is to find the length of words in bytes
+	8 is the amount of bytes we cant account for so we divide to find our fragment offset
+
+ICMPv4 OS Fingerprinting
+	in wireshark check data then data and click on it. if last line of "readable" data is the payload message then you can roughly determine what kinda system it is
+    Linux:
+        Default size: 64 bytes
+        Payload message:
+        !\”#\$%&\‘()*+,-./01234567
+    Windows:
+        Default size: 40 bytes
+        Payload message:
+        abcdefghijklmnopqrstuvwabcdefghi
+
+ICMPv4 Traceroute
+    Can use various protocols and ports
+        ICMP (windows default)
+        UDP (linux default)
+        TCP
+
+ICMPv4 Traceroute (Linux)
+    Default: UDP
+    	traceroute 172.16.82.106
+    	traceroute -U 172.16.82.106
+			-U specifies udp 
+    Requires root: Modified
+    	sudo traceroute -I 172.16.82.106
+			-I uses traceroute with ICMP
+    	sudo traceroute -T 172.16.82.106
+    	sudo traceroute -T 172.16.82.106 -p 443
+			-T uses tcp and needs sudo due to sending modified packets
+			-p specifies the port your wanting to use
+
+IPv6 address scopes
+    Global Unicast Addresses (2000::/3)
+    Unique Local (fc00::/7)
+    Loopback (::1/128)
+    Link-Local (fe80::/10)
+    Multicast (ff00::/8)
+
+linux routing table command
+	netstat -rn
+
+Metrics
+    RIP: Hop
+    EIGRP: Bandwidth, Delay, Load, Reliability
+    OSPF: Cost
+    BGP: Policy
+
+Classful Routing Protocol
+	Sr. No. 1
+		do not carry subnet mask info within the routing updates
+	Sr. No. 2
+		exchange routing updates at the regular time intervals
+	Sr. No. 3
+		use periodic updates
+	Sr. No. 4
+		do not use hello messages
+	Sr. No. 5
+		consume more network bandwidth
+	Sr. No. 6 
+		do not support CIDR and VLSM
+	Sr. No. 7
+		examples: RIP and IGRP
+
+Classless Routing Protocol 
+	Sr. No. 1
+		carry subnet mask information within therouting updates
+	Sr. No. 2
+		exchange routing tables only when thechanges occurs in the network topology
+	Sr. No. 3
+		use triggered updates
+	Sr. No. 4
+		usehello messages to check the status of neighbor routers
+	Sr. No. 5
+		consume less network bandwidth
+	Sr. No. 6
+		support CIDR and VLSM
+	Sr. No. 7 
+		Examples: OSPF and IS-IS
+
+Routing Protocol
+	used between layer 3 devices to learn and advertise routes and maintain routing tables
+	routing protocol routes a routed protocol for learning and maintaining routing table
+
+Routed Protocol
+	used between routers to direct user traffic. it is also called network protocols
+	routed protocols are routed by routing protocols
+
+Autonomous Systems
+    Definition:
+        Collection of connected Internet Protocol routing prefixes under the control of one or more network operators on behalf of a single administrative entity or domain, that presents a common and clearly defined routing policy to the Internet.
+
+Describe Transport Layer Protocols
+    Connection-oriented
+        TCP - Segments
+        Unicast traffic
+    Connection-less
+        UDP - Datagrams
+        Broadcast, Multicast, or Unicast Traffic
+
+TCP Options
+    0 - End of Options
+    1 - No Options (NOP)
+    2 - Maximum Segment Size (MSS)
+    3 - TCP Windows Scaling
+    4 - Selective ACK (SACK) Permitted
+    5 - SACK
+    8 - TCP Timestamps
+
+Components of SSH Architecture
+    Client / Server / Session
+    Keys
+        User Key - Asymmetric public key used to identify the user to the server
+        Host Key - Asymmetric public key used to identify the server to the user
+        Session Key - Symmetric key created by the client and server to protect the session’s 
+
+VIEW/CHANGE SSH PORT
+    To view the current configured SSH port
+    cat /etc/ssh/sshd_config | grep Port
+    Edit file to change the SSH Port
+    sudo nano /etc/ssh/sshd_config
+    Restart the SSH Service
+    systemctl restart ssh
+
+SSH-KEYGEN
+	ssh-keygen -t rsa -b 4096 -C "Student"
+    	Create your own SSH Public/Private keys
+        	-t Encryption (rsa|dsa|ecdsa|ed25519)
+        	-b Bit length (1024|2048|4096)
+        	-C Adds a comment
+    	~/.ssh/id_rsa and ~/.ssh/id_rsa.pub
+
+DNS query/response
+    Resolves Names to IP addresses
+    Queries and responses use UDP
+    DNS response larger than 512 bytes use TCP
+        DNS Zone Transfer
+        DNS Security
+
+DNS Records
+    A - IPv4 record
+    AAAA - IPv6 record
+    MX - Mail Server record
+    TXT - Human-readable text
+    NS - Name Server record
+    SOA - Start of Authority
+
+FTP (TCP 20/21)
+    RFC 959
+    Port 21 open for Control
+    Port 20 only open during data transfer
+
+TFTP (UDP 69)
+    Clear-Text
+    Reliability provided at Application layer
+    Used by routers and switches to transfer IOS and config files
+
+SMTP (TCP 25)
+    Used to send email
+    No encryption
+    SMTP over TLS/SSL (SMTPS)
+        TCP Ports 587 and 465
+
+POP (TCP 110)
+    Receives email
+    No sync with server
+    No encryption
+    POP3
+
+IMAP (TCP 143)
+    Receives email
+    Sync with server
+    No encryption
+    IMAP4
+DHCP (67/68)
+	DHCPv4
+    	DORA
+        	Discover (Broadcast)
+        	Offer (Unicast)
+        	Request (Broadcast)
+        	Acknowlege (Unicast)
+	DHCPv6
+    	If Managed flag is set during SLAAC:
+        	Solicit (Multicast)
+        	Advertise (Unicast)
+        	Request or Information Request (Multicast)
+        	Reply (Unicast)
+
+NTP (UDP 123)
+    Stratum 0 - authoritative time source
+    Up to Stratum 15
+    Vulnerable to crafted packet injection
+
+TACACS (TCP 49) Simple/Extended
+
+RADIUS (UDP 1645/1646 and 1812/1813)
+
+Diameter (TCP 3868)
+
+SNMP (UDP 161/162)
+    Versions:
+        SNMPv1 - RFC 1157
+        SNMPv2c - RFC 1441
+        SNMPv3 - RFC 3410
+	7 Message Types
+        Get Request
+        Set Request
+        Get Next
+        Get Bulk
+        Response
+        Trap
+        Inform
+
+RTP (UDP any above 1023)
+
+RDP (TCP 3389)
+    Developed by Microsoft (Open Standard)
+        No server software needed
+    Other Proprietary RDP software
+        Requires to have 3rd pary software installed
+
+Kerberos (UDP 88)
+    Secure network authentication protocol
+    Clients obtain tickets to access services
+    Mutual authentication
+    Used by Active Directory
+
+LDAP(s) (TCP 389 and 636)
+    Client/server model
+    Hierarchical
+    Directory schema
+    Unsecure and secure versions
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
