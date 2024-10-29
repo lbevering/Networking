@@ -1,0 +1,70 @@
+duckduckgo.com
+
+https://net.cybbh.io/public/networking/latest/index.html
+http://networking-ctfd-1.server.vta:8000/
+	  http://10.50.23.214:8000/
+
+Protocol Data Unit (PDU) - data unit used per the layer your talking about/using
+    Session-Application = Data
+    Transport = Segment/Datagram
+    Network = Packet
+    Data Link = Frame
+    Physical = Bit
+
+Internet Standards Organizations
+    IETF - RFC’s
+        https://www.rfc-editor.org/rfc-index.html
+    IANA - Internet Numbers
+        https://www.iana.org/numbers
+    IEEE - LAN/WAN electrical standards
+        https://www.ieee.org/
+
+IEEE Standard
+Ethernet
+  802.3(x)
+Wireless
+	802.11(x)
+Token Ring
+	802.5
+
+MAC Address Types
+    Unicast: One to one
+        8th bit is off
+    Multicast: One to many
+        8th bit is on
+    Broadcast: One to all
+        All bits on
+
+VLAN Types
+    Default - VLAN 1
+    Data - User traffic
+    Voice - VOIP traffic
+    Management - Switch and router management
+    Native - Untagged switch and router traffic
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
