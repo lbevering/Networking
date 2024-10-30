@@ -285,6 +285,129 @@ LDAP(s) (TCP 389 and 636)
     Directory schema
     Unsecure and secure versions
 
+Types of Sniffing
+	Active
+		create traffice in order to see it
+			-ex: send an arp request to check respones
+	Passive
+		by default sniffing is passive
+			-ex: listen to all traffic being sent to you
+
+Popular Software Packet Capture Programs
+	tcpdump
+	Wireshark
+	tshark
+	p0f
+	NetworkMiner
+	NetMiner
+	SolarWinds
+	BetterCap
+	EtterCap
+
+Interface Naming
+    Traditional:
+        eth0, eth1
+    Consistent:
+        eno1, ens3
+
+TCPDUMP Primitive Qualifiers
+    type - the 'kind of thing' that the id name or number refers to
+        host, net, port, or portrange
+    dir - transfer direction to and/or from
+        src or dst
+    proto - restricts the match to a particular protocol(s)
+        ether, arp, ip, ip6, icmp, tcp, or udp
+
+Basic TCPDump options
+    -A = print payload in ASCII
+    -D = list interfaces
+    -i = specify capture interface
+    -e = print data-link headers
+    -X or XX = print payload in HEX and ASCII
+
+Basic TCPDump options
+    -w = write to pcap
+    -r = read from pcap
+    -v, vv, or vvv = verbosity
+    -n = no inverse lookups
+
+Logical Operators
+    Primitives may be combined using:
+        Concatenation: 'and' ( && )
+        Alteration: 'or' ( || )
+        Negation: 'not' ( ! )
+
+Relational Operators
+    < or < =
+    > or >=
+    = or == or !=
+
+------------------------------------------------
+Verify TCPDUMP
+    -d = Dump the compiled packet-matching code in a human readable form
+
+command example:
+	tcpdump "ether[12:2] = 0x800" -d
+output example:	
+	(000) ldh   [12]
+	(001) jeq   0x800,  jt 2  jf 3
+	(002) ret   #262144
+	(003) ret   #0
+
+	ldh  - loads half-word (16-bit) value in the accumulator from offset 12
+      in the ethernet header
+	jeq - check if the value is "0x800" and if this is true "jump true" to line 2,
+      if it is false "jump false" to line 3
+	ret #262144 - returns the default snapshot length in bytes
+	ret #0 - returns nothing, it didn’t meet the criteria in the jeq statement.
+-----------------------------------------------
+
+Berkley Packet Filters
+	tcpdump {A} [B:C] {D} {E} {F} {G}
+		A = Protocol (ether | arp | ip | ip6 | icmp | tcp | udp)
+		B = Header Byte offset
+		C = optional: Byte Length. Can be 1, 2 or 4 (default 1)
+		D = optional: Bitwise mask ( & )
+		E = Relational operator ( = | == | > | < | <= | >= | != | () | << | >> )
+		F = Result of Expression
+		G = optional: Logical Operator ( && || ) to bridge expressions
+	BPF examples
+		tcpdump -i eth0 'ether[12:2] = 0x0806'
+		tcpdump -i eth1 'ip[9] = 0x06'
+		tcpdump -i eth0 'tcp[0:2] = 53 || tcp[2:2] = 53'
+		tcpdump 'ether[12:2] = 0x0800 && (tcp[2:2] != 22 && tcp[2:2] != 23)'
+
+Bitwise Masking
+    BPFs can read 1 (byte), 2 (half-word) or 4 (word)
+    BPFs alone will only filter to the byte level
+    Bit-wise masking allow filtering precision to the bit level
+    Binary (0) to ignore bit
+    Binary (1) to match bit
+Bitwise Masking examples
+	tcpdump 'ether[12:4] & 0xffff0fff = 0x81000abc'
+	tcpdump 'ip[1] & 252 = 32'
+	tcpdump 'ip[6] & 224 != 0'
+	tcpdump 'tcp[13] & 0x11 = 0x11'
+	tcpdump 'tcp[12] & 0xf0 > 0x50'
+
+BPFs at the Data-Link layer
+	Search for IPv4, ARP, VLAN Tag, and IPv6 respectively.
+		ether[12:2] = 0x0800
+			ipv4
+		ether[12:2] = 0x0806
+			arp
+		ether[12:2] = 0x8100
+			vlan tag
+		ether[12:2] = 0x86dd
+			ipv6
+
+
+
+
+
+
+
+
 
 
 
