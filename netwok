@@ -152,7 +152,7 @@ Describe Transport Layer Protocols
     Connection-less
         UDP - Datagrams
         Broadcast, Multicast, or Unicast Traffic
-
+raw_packet_start
 TCP Options
     0 - End of Options
     1 - No Options (NOP)
@@ -370,7 +370,7 @@ Berkley Packet Filters
 		C = optional: Byte Length. Can be 1, 2 or 4 (default 1)
 		D = optional: Bitwise mask ( & )
 		E = Relational operator ( = | == | > | < | <= | >= | != | () | << | >> )
-		F = Result of Expression
+		F = Result of Expressionraw_packet_start
 		G = optional: Logical Operator ( && || ) to bridge expressions
 	BPF examples
 		tcpdump -i eth0 'ether[12:2] = 0x0806'
@@ -402,9 +402,38 @@ BPFs at the Data-Link layer
 		ether[12:2] = 0x86dd
 			ipv6
 
+Field Guide for Programming
+	very useful
+	IE: info about sockets and python networking scripts etc...
+		https://net.cybbh.io/public/networking/latest/12_programming/fg.html#_12_5_1_tcp_stream_client
 
+Socket creation and packet manipulation activity
+	Scheme of Maneuver:
+		> Linux Workstations:
+		→ T1: INTERNET_HOST
+		-→ T2: BLUE_DMZ_Host
 
+	Target Section:
 
+		T1
+			Hostname: INTERNET_HOST
+			IP: PROVIDED FLOAT IP
+			OS: Linux
+			Creds: PROVIDED CREDENTIALS
+			Last Known SSH Port: 22
+			PSP: none
+			Malware: none
+			Action: Send a Datagram Socket Message to this host
+
+		T2
+			Hostname: BLUE_DMZ_Host-1
+			IP: 172.16.1.15
+			OS: unknown
+			Creds:unknown
+			Last Known SSH Port: unknown
+			PSP: Unknown
+			Malware: Unknown
+			Action: Send a Stream Socket Message to this host
 
 
 
