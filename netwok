@@ -929,6 +929,10 @@ IH> ssh user@127.0.0.1 -p50101 -D 9050 -NT
 IH> proxychains wget -r ftp://127.0.0.1 
 	or proxychains ftp 127.0.0.1
 
+<user>@<IP> -L <bind port>:<tgt IP>:<tgt port> -NT
+<user>@<IP> -R <bind port>:<tgt IP>:<tgt port> -NT
+<user>@<IP> -D 9050 -NT
+
 
 
 
