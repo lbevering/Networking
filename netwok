@@ -1196,12 +1196,15 @@ Failed IDS/IPS
     	Fail close
 
 
+Floating IP of start pivot is: 10.50.20.84
+/usr/share/cctc/
 
+If the question asks you to submit an answer of cheese in all caps converted to base64:
+	echo "CHEESE" | base64
+	Q0hFRVNFCg==
 
-
-
-
-
+scanning next set of boxs
+nmap -Pn -T4 -vvvv -p 21-23,80 10.1.1.11,25,33,90,125
 
 
 
