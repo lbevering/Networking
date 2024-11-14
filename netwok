@@ -933,8 +933,7 @@ IH> proxychains wget -r ftp://127.0.0.1
 <user>@<IP> -R <bind port>:<tgt IP>:<tgt port> -NT
 <user>@<IP> -D 9050 -NT
 
-If ssh is blocked to outside parties then:
-	
+after creating a -R tunnel on a remote machine (that has telnet but no outside access to shh) in order to get on you need to to telnet to loopback utilizing the port you opened (RHP)
 
 
 
