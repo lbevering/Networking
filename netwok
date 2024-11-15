@@ -1206,7 +1206,7 @@ If the question asks you to submit an answer of cheese in all caps converted to 
 scanning next set of boxs
 nmap -Pn -T4 -vvvv -p 21-23,80 10.1.1.11,25,33,90,125
 
-
+for i in {1..254} ;do (ping -c 1 192.168.1.$i | grep "bytes from" &) ;done
 
 
 
